@@ -1,13 +1,14 @@
 import httpx
 import os
 from dotenv import load_dotenv
+from ..models.text import Text
 
 load_dotenv()
 API_USER = os.getenv("API_USER")
 API_SECRET = os.getenv("API_SECRET")
-async def analyze_text():
+async def analyze_text(text: Text):
     data = {
-        'text': 'Contact rick(at)gmail(dot)com to have sx',
+        'text': text.text,
         'mode': 'ml',
         'lang': 'en',
         'opt_countries': 'us,gb,fr',

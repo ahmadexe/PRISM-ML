@@ -1,14 +1,19 @@
 import httpx
 import os
 from dotenv import load_dotenv
+from ..models.image import Image
 
 load_dotenv()
 API_USER = os.getenv("API_USER")
 API_SECRET = os.getenv("API_SECRET")
 
-async def analyze_nsfw_image():
+async def analyze_nsfw_image(image: Image):
+    #https://cdn.i-scmp.com/sites/default/files/d8/images/canvas/2023/10/03/7192bc9c-cfc3-459f-aea6-a3a89cc462d6_0f519f43.jpg
+    url = image.url
+    if not url:
+        raise HTTPException(status_code=400, detail="URL not in request body")
     params = {
-        'url': 'https://cdn.i-scmp.com/sites/default/files/d8/images/canvas/2023/10/03/7192bc9c-cfc3-459f-aea6-a3a89cc462d6_0f519f43.jpg',
+        'url': url,
         'models': 'nudity-2.0',
         'api_user': API_USER,
         'api_secret': API_SECRET
@@ -34,9 +39,13 @@ async def analyze_nsfw_image():
             raise HTTPException(status_code=500, detail=str(e))
 
 
-async def analyze_gore_image():
+async def analyze_gore_image(image: Image):
+    #'https://cdn-apgml.nitrocdn.com/LebpnhtoivqQZrhySxTgIGIqkErReVqW/assets/images/optimized/rev-935bbea/www.shouselaw.com/wp-content/uploads/2022/08/bloody-knife-homicide-murder.jpeg'
+    url = image.url
+    if not url:
+        raise HTTPException(status_code=400, detail="URL not in request body")
     params = {
-        'url': 'https://cdn-apgml.nitrocdn.com/LebpnhtoivqQZrhySxTgIGIqkErReVqW/assets/images/optimized/rev-935bbea/www.shouselaw.com/wp-content/uploads/2022/08/bloody-knife-homicide-murder.jpeg',
+        'url': url,
         'models': 'gore',
         'api_user': API_USER,
         'api_secret': API_SECRET
@@ -59,13 +68,17 @@ async def analyze_gore_image():
             raise HTTPException(status_code=e.response.status_code, detail=str(e))
         except Exception as e:
             # Handle other exceptions
-            raise HTTPException(status_code=500, detail=str(e))
+            raise BaseException()
 
 
 
-async def analyze_offensive_image():
+async def analyze_offensive_image(image: Image):
+    #'https://eadn-wc03-11391632.nxedge.io/wp-content/uploads/2022/01/2c7ecbe491cbc694e4948f3c23f7d1ea.swastika_1.webp'
+    url = image.url
+    if not url:
+        raise HTTPException(status_code=400, detail="URL not in request body")
     params = {
-        'url': 'https://eadn-wc03-11391632.nxedge.io/wp-content/uploads/2022/01/2c7ecbe491cbc694e4948f3c23f7d1ea.swastika_1.webp',
+        'url': url,
         'models': 'offensive',
         'api_user': API_USER,
         'api_secret': API_SECRET
@@ -107,9 +120,11 @@ async def analyze_offensive_image():
             # Handle other exceptions
             raise HTTPException(status_code=500, detail=str(e))
 
-async def analyze_text_image():
+async def analyze_text_image(image: Image):
+    #'https://i.pinimg.com/564x/d9/69/1d/d9691d6914f3e0cdb156bda01d90b464.jpg'
+    url = image.url
     params = {
-        'url': 'https://i.pinimg.com/564x/d9/69/1d/d9691d6914f3e0cdb156bda01d90b464.jpg',
+        'url': url,
         'models': 'text-content',
         'api_user': API_USER,
         'api_secret': API_SECRET
