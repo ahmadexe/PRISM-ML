@@ -68,8 +68,7 @@ async def analyze_gore_image(image: Image):
             raise HTTPException(status_code=e.response.status_code, detail=str(e))
         except Exception as e:
             # Handle other exceptions
-
-            raise BaseException()
+            raise HTTPException(status_code=500, detail=str(e))
 
 
 async def analyze_offensive_image(image: Image):
