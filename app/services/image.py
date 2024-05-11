@@ -7,6 +7,7 @@ load_dotenv()
 API_USER = os.getenv("API_USER")
 API_SECRET = os.getenv("API_SECRET")
 
+
 async def analyze_nsfw_image(image: Image):
     #https://cdn.i-scmp.com/sites/default/files/d8/images/canvas/2023/10/03/7192bc9c-cfc3-459f-aea6-a3a89cc462d6_0f519f43.jpg
     url = image.url
@@ -38,7 +39,6 @@ async def analyze_nsfw_image(image: Image):
             # Handle other exceptions
             raise HTTPException(status_code=500, detail=str(e))
 
-
 async def analyze_gore_image(image: Image):
     #'https://cdn-apgml.nitrocdn.com/LebpnhtoivqQZrhySxTgIGIqkErReVqW/assets/images/optimized/rev-935bbea/www.shouselaw.com/wp-content/uploads/2022/08/bloody-knife-homicide-murder.jpeg'
     url = image.url
@@ -68,8 +68,8 @@ async def analyze_gore_image(image: Image):
             raise HTTPException(status_code=e.response.status_code, detail=str(e))
         except Exception as e:
             # Handle other exceptions
-            raise BaseException()
 
+            raise BaseException()
 
 
 async def analyze_offensive_image(image: Image):
@@ -79,6 +79,7 @@ async def analyze_offensive_image(image: Image):
         raise HTTPException(status_code=400, detail="URL not in request body")
     params = {
         'url': url,
+
         'models': 'offensive',
         'api_user': API_USER,
         'api_secret': API_SECRET
@@ -119,6 +120,7 @@ async def analyze_offensive_image(image: Image):
         except Exception as e:
             # Handle other exceptions
             raise HTTPException(status_code=500, detail=str(e))
+
 
 async def analyze_text_image(image: Image):
     #'https://i.pinimg.com/564x/d9/69/1d/d9691d6914f3e0cdb156bda01d90b464.jpg'

@@ -9,17 +9,19 @@ from ..models.image import Image
 router = APIRouter()
 
 @router.get("/mod/image/nsfw", tags=["image"])
+
 async def nsfw(image: Image):
     return await analyze_nsfw_image(image)
 
 @router.get("/mod/image/gore", tags=["image"])
-async def gore(image: Image):
-    return await analyze_gore_image(image)
+async def gore():
+    return await analyze_gore_image()
 
 @router.get("/mod/image/offensive", tags=["image"])
-async def offensive(image: Image):
-    return await analyze_offensive_image(image)
+async def offensive():
+    return await analyze_offensive_image()
 
 @router.get("/mod/image/text", tags=["image"])
-async def text(image: Image):
-    return await analyze_text_image(image)
+async def text():
+    return await analyze_text_image()
+
