@@ -78,7 +78,6 @@ async def analyze_offensive_image(image: Image):
         raise HTTPException(status_code=400, detail="URL not in request body")
     params = {
         'url': url,
-
         'models': 'offensive',
         'api_user': API_USER,
         'api_secret': API_SECRET
