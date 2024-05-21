@@ -5,6 +5,6 @@ from ..models.text import Text
 
 router = APIRouter()
 
-@router.get("/mod/text", tags=["text"])
+@router.post("/mod/text", tags=["text"])
 async def text(text: Text):
     return await analyze_text(text)
